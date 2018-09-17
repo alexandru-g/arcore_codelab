@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="4dp"
+    android:background="#444444FF">
+
+    <TextView
+        android:id="@+id/item_andy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Andy"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/item_distillery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Distillery"
+        android:textColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/item_hay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hay"
+        android:textColor="@android:color/white"/>
+
+</LinearLayout>

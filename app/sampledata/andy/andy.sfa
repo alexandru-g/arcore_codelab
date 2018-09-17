@@ -1,0 +1,176 @@
+{
+   bound_relative_root: {
+      x: 0.5,
+      y: 0,
+      z: 0.5,
+   },
+   materials: [
+      {
+         name: "andy_mat",
+         parameters: [
+            {
+               baseColorFactor: [
+                  1,
+                  1,
+                  1,
+                  1,
+               ],
+            },
+            {
+               baseColor: "andy_color255_baseColor",
+            },
+            {
+               diffuseColorFactor: null,
+            },
+            {
+               diffuseColor: null,
+            },
+            {
+               normal: null,
+            },
+            {
+               metallicFactor: 1,
+            },
+            {
+               roughnessFactor: 1,
+            },
+            {
+               specularFactor: null,
+            },
+            {
+               glossinessFactor: null,
+            },
+            {
+               specularGlossiness: null,
+            },
+            {
+               specularGlossinessCalculation: null,
+            },
+            {
+               metallicRoughness: "andy_roughness0",
+            },
+            {
+               occlusion: null,
+            },
+            {
+               emissiveFactor: [
+                  0,
+                  0,
+                  0,
+                  1,
+               ],
+            },
+            {
+               emissive: null,
+            },
+            {
+               reflectance: null,
+            },
+            {
+               opacity: null,
+            },
+         ],
+         source: "build/sceneform_sdk/default_materials/gltf_material.sfm",
+      },
+      {
+         name: "clothes_mat",
+         parameters: [
+            {
+               baseColorFactor: [
+                  1,
+                  1,
+                  1,
+                  1,
+               ],
+            },
+            {
+               baseColor: "clothes_color255_baseColor",
+            },
+            {
+               diffuseColorFactor: null,
+            },
+            {
+               diffuseColor: null,
+            },
+            {
+               normal: null,
+            },
+            {
+               metallicFactor: 0,
+            },
+            {
+               roughnessFactor: 0.90000000000000002,
+            },
+            {
+               specularFactor: null,
+            },
+            {
+               glossinessFactor: null,
+            },
+            {
+               specularGlossiness: null,
+            },
+            {
+               specularGlossinessCalculation: null,
+            },
+            {
+               metallicRoughness: null,
+            },
+            {
+               occlusion: null,
+            },
+            {
+               emissiveFactor: [
+                  0,
+                  0,
+                  0,
+                  1,
+               ],
+            },
+            {
+               emissive: null,
+            },
+            {
+               reflectance: null,
+            },
+            {
+               opacity: null,
+            },
+         ],
+         source: "build/sceneform_sdk/default_materials/gltf_material.sfm",
+      },
+   ],
+   model: {
+      attributes: [
+         "Position",
+         "TexCoord",
+         "Orientation",
+      ],
+      collision: {},
+      file: "sampledata/andy/andy.gltf",
+      name: "andy",
+      recenter: "root",
+      scale: 0.007883999999999999,
+   },
+   samplers: [
+      {
+         file: "sampledata/andy/clothes_color255_baseColor.jpg",
+         name: "clothes_color255_baseColor",
+         pipeline_name: "clothes_color255_baseColor.jpg",
+      },
+      {
+         file: "sampledata/andy/andy_roughness0.jpg",
+         name: "andy_roughness0",
+         params: {
+            usage_type: "Data",
+         },
+         pipeline_name: "andy_roughness0.jpg",
+      },
+      {
+         file: "sampledata/andy/andy_color255_baseColor.jpg",
+         name: "andy_color255_baseColor",
+         pipeline_name: "andy_color255_baseColor.jpg",
+      },
+   ],
+   version: "0.52:1",
+}

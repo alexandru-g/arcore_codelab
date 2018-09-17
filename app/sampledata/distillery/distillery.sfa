@@ -1,0 +1,315 @@
+{
+   bound_relative_root: {
+      x: 0.5,
+      y: 0,
+      z: 0.5,
+   },
+   materials: [
+      {
+         name: "distiller_mat",
+         parameters: [
+            {
+               baseColorFactor: [
+                  1,
+                  1,
+                  1,
+                  1,
+               ],
+            },
+            {
+               baseColor: "distillery_color255_baseColor",
+            },
+            {
+               diffuseColorFactor: null,
+            },
+            {
+               diffuseColor: null,
+            },
+            {
+               normal: null,
+            },
+            {
+               metallicFactor: 1,
+            },
+            {
+               roughnessFactor: 1,
+            },
+            {
+               specularFactor: null,
+            },
+            {
+               glossinessFactor: null,
+            },
+            {
+               specularGlossiness: null,
+            },
+            {
+               specularGlossinessCalculation: null,
+            },
+            {
+               metallicRoughness: "distillery_roughnessdistillery_metalic",
+            },
+            {
+               occlusion: null,
+            },
+            {
+               emissiveFactor: [
+                  0,
+                  0,
+                  0,
+                  1,
+               ],
+            },
+            {
+               emissive: null,
+            },
+            {
+               reflectance: null,
+            },
+            {
+               opacity: null,
+            },
+         ],
+         source: "build/sceneform_sdk/default_materials/gltf_material.sfm",
+      },
+      {
+         name: "fire_mat",
+         parameters: [
+            {
+               baseColorFactor: [
+                  1,
+                  1,
+                  1,
+                  1,
+               ],
+            },
+            {
+               baseColor: "fire_color255_baseColor",
+            },
+            {
+               diffuseColorFactor: null,
+            },
+            {
+               diffuseColor: null,
+            },
+            {
+               normal: null,
+            },
+            {
+               metallicFactor: 0,
+            },
+            {
+               roughnessFactor: 1,
+            },
+            {
+               specularFactor: null,
+            },
+            {
+               glossinessFactor: null,
+            },
+            {
+               specularGlossiness: null,
+            },
+            {
+               specularGlossinessCalculation: null,
+            },
+            {
+               metallicRoughness: null,
+            },
+            {
+               occlusion: null,
+            },
+            {
+               emissiveFactor: [
+                  1,
+                  1,
+                  1,
+                  1,
+               ],
+            },
+            {
+               emissive: "fire_emission",
+            },
+            {
+               reflectance: null,
+            },
+            {
+               opacity: null,
+            },
+         ],
+         source: "build/sceneform_sdk/default_materials/gltf_material.sfm",
+      },
+      {
+         name: "glass_mat",
+         parameters: [
+            {
+               baseColorFactor: [
+                  0.01915,
+                  0.26618700000000001,
+                  0.068913000000000002,
+                  0.20000000000000001,
+               ],
+            },
+            {
+               baseColor: null,
+            },
+            {
+               diffuseColorFactor: null,
+            },
+            {
+               diffuseColor: null,
+            },
+            {
+               normal: null,
+            },
+            {
+               metallicFactor: 0,
+            },
+            {
+               roughnessFactor: 0,
+            },
+            {
+               specularFactor: null,
+            },
+            {
+               glossinessFactor: null,
+            },
+            {
+               specularGlossiness: null,
+            },
+            {
+               specularGlossinessCalculation: null,
+            },
+            {
+               metallicRoughness: null,
+            },
+            {
+               occlusion: null,
+            },
+            {
+               emissiveFactor: [
+                  0,
+                  0,
+                  0,
+                  1,
+               ],
+            },
+            {
+               emissive: null,
+            },
+            {
+               reflectance: null,
+            },
+            {
+               opacity: null,
+            },
+         ],
+         source: "build/sceneform_sdk/default_materials/gltf_material.sfm",
+      },
+      {
+         name: "water_mat",
+         parameters: [
+            {
+               baseColorFactor: [
+                  0.043165000000000002,
+                  0.032349999999999997,
+                  0.028570000000000002,
+                  0.59999999999999998,
+               ],
+            },
+            {
+               baseColor: null,
+            },
+            {
+               diffuseColorFactor: null,
+            },
+            {
+               diffuseColor: null,
+            },
+            {
+               normal: null,
+            },
+            {
+               metallicFactor: 0,
+            },
+            {
+               roughnessFactor: 0,
+            },
+            {
+               specularFactor: null,
+            },
+            {
+               glossinessFactor: null,
+            },
+            {
+               specularGlossiness: null,
+            },
+            {
+               specularGlossinessCalculation: null,
+            },
+            {
+               metallicRoughness: null,
+            },
+            {
+               occlusion: null,
+            },
+            {
+               emissiveFactor: [
+                  0,
+                  0,
+                  0,
+                  1,
+               ],
+            },
+            {
+               emissive: null,
+            },
+            {
+               reflectance: null,
+            },
+            {
+               opacity: null,
+            },
+         ],
+         source: "build/sceneform_sdk/default_materials/gltf_material.sfm",
+      },
+   ],
+   model: {
+      attributes: [
+         "Position",
+         "TexCoord",
+         "Orientation",
+      ],
+      collision: {},
+      file: "sampledata/distillery/distillery.gltf",
+      name: "distillery",
+      recenter: "root",
+      scale: 0.007918000000000002,
+   },
+   samplers: [
+      {
+         file: "sampledata/distillery/fire_color255_baseColor.jpg",
+         name: "fire_color255_baseColor",
+         pipeline_name: "fire_color255_baseColor.jpg",
+      },
+      {
+         file: "sampledata/distillery/distillery_roughnessdistillery_metalic.jpg",
+         name: "distillery_roughnessdistillery_metalic",
+         params: {
+            usage_type: "Data",
+         },
+         pipeline_name: "distillery_roughnessdistillery_metalic.jpg",
+      },
+      {
+         file: "sampledata/distillery/fire_emission.png",
+         name: "fire_emission",
+         pipeline_name: "fire_emission.png",
+      },
+      {
+         file: "sampledata/distillery/distillery_color255_baseColor.jpg",
+         name: "distillery_color255_baseColor",
+         pipeline_name: "distillery_color255_baseColor.jpg",
+      },
+   ],
+   version: "0.52:1",
+}
