@@ -7,26 +7,29 @@
   <meta name="theme-color" content="#4F7DC9">
   <meta charset="UTF-8">
   <title>Augmented Reality on Android</title>
-  <script src="../../arcore_codelab/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
-  <link rel="import" href="../../arcore_codelab/elements/codelab.html">
   <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400|Roboto:400,300,400italic,500,700|Roboto+Mono">
-  <style is="custom-style">
-    body {
-      font-family: "Roboto",sans-serif;
-      background: var(--google-codelab-background, #F8F9FA);
+  <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://storage.googleapis.com/codelab-elements/codelab-elements.css">
+  <style>
+    .success {
+      color: #1e8e3e;
+    }
+    .error {
+      color: red;
     }
   </style>
-  
 </head>
-<body unresolved class="fullbleed">
-
-  <google-codelab title="Augmented Reality on Android"
+<body>
+  <google-codelab-analytics gaid="UA-49880327-14"></google-codelab-analytics>
+  <google-codelab codelab-gaid=""
+                  id="docs"
+                  title="Augmented Reality on Android"
                   environment="web"
                   feedback-link="https://github.com/alexandru-g/arcore_codelab/issues">
     
       <google-codelab-step label="Prerequisites" duration="0">
         <p>In order to start creating your first ARCore application, you need to install <a href="https://developer.android.com/studio/index.html" target="_blank">Android Studio</a> version 3.1 or higher with Android SDK Platform version 7.0 (API level 24) or higher.</p>
-<h2><strong>Preparing your device or emulator</strong></h2>
+<h2 is-upgraded><strong>Preparing your device or emulator</strong></h2>
 <p>You can run AR apps on a <a href="https://developers.google.com/ar/discover/supported-devices" target="_blank">supported device</a> or in the Android Emulator:</p>
 <ul>
 <li>In the emulator, you must sign into the Play Store or <a href="https://developers.google.com/ar/develop/java/emulator#update-arcore" target="_blank">update ARCore</a> manually.</li>
@@ -41,7 +44,7 @@
 <li>Make sure your emulator is configured to use the latest version. In the Extended controls panel ( on the Toolbar), select <strong>Settings &gt; Advanced &gt; OpenGL ES API level &gt; Renderer maximum (up to OpenGL ES 3.1)</strong>, and then restart the emulator.</li>
 <li>Run the emulator, briefly interact with the emulated device, then check whether OpenGL ES 3.0 or higher is being used by running the following command: <em>adb logcat | grep eglMakeCurrent</em> (alternatively type in <em>eglMakeCurrent</em> in Android Studio&#39;s logcat window). If you see ver 3 0 or higher version, then you can run Sceneform apps. If you see a lower version, then your desktop GPU does not support OpenGL ES 3.0 and you must use a <a href="https://developers.google.com/ar/discover/supported-devices" target="_blank">supported device</a> to run Sceneform apps. </li>
 </ul>
-<h2><strong>Enabling AR support in the emulator</strong></h2>
+<h2 is-upgraded><strong>Enabling AR support in the emulator</strong></h2>
 <p>Check out the instructions to <a href="https://developer.android.com/studio/run/managing-avds.html#createavd" target="_blank">Create a Virtual Device</a> to create a new emulator.</p>
 <p>Configure the emulator to support AR applications:</p>
 <ul>
@@ -50,9 +53,9 @@
 <li>Go to <strong>Verify Configuration &gt; Show Advanced Settings</strong>.</li>
 <li>Make sure that <strong>Camera Back</strong> is set to <strong>VirtualScene</strong>.</li>
 </ul>
-<h2><strong>Interacting with the emulator&#39;s virtual camera</strong></h2>
+<h2 is-upgraded><strong>Interacting with the emulator&#39;s virtual camera</strong></h2>
 <p>Press and hold <strong>Option</strong> (macOS) or <strong>Alt</strong> (Linux or Windows) to access camera movement controls. Use the following controls to move the camera:</p>
-<h3>macOS</h3>
+<h3 is-upgraded>macOS</h3>
 <table>
 <tr><td colspan="1" rowspan="1"><p>Move left or right</p>
 </td><td colspan="1" rowspan="1"><p>Hold Option + press A or D</p>
@@ -67,7 +70,7 @@
 </td><td colspan="1" rowspan="1"><p>Hold Option + move mouse</p>
 </td></tr>
 </table>
-<h3>Linux or Windows</h3>
+<h3 is-upgraded>Linux or Windows</h3>
 <table>
 <tr><td colspan="1" rowspan="1"><p>Move left or right</p>
 </td><td colspan="1" rowspan="1"><p>Hold Alt + press A or D</p>
@@ -84,7 +87,7 @@
 </table>
 <p>Release <strong>Option</strong> or <strong>Alt</strong> to return to interactive mode in the emulator.</p>
 <p>Use the <strong>Virtual Sensors</strong> tab in <a href="https://developer.android.com/studio/run/emulator.html#extended" target="_blank">Extended controls</a> for more precise device positioning.</p>
-<h2><strong>Install the Google Sceneform Tools plugin</strong></h2>
+<h2 is-upgraded><strong>Install the Google Sceneform Tools plugin</strong></h2>
 <p>In order for us to import our own 3D models, we need to install the Sceneform Tools plugin that will help us achieve that.</p>
 <p>In Android Studio open the <strong>Plugins</strong> settings:</p>
 <ul>
@@ -92,7 +95,7 @@
 <li>macOS: <strong>Android Studio &gt; Preferences &gt; Plugins</strong></li>
 </ul>
 <p>Then click <strong>Browse repositories</strong> and install the <em>Google Sceneform Tools (Beta)</em>.</p>
-<h2><strong>Set up your Android Studio project</strong></h2>
+<h2 is-upgraded><strong>Set up your Android Studio project</strong></h2>
 <p>Create a new Android project using the default settings and make sure the minimum API level is set to 24 (ARCore minimum). Make sure you have an empty initial Activity.</p>
 
 
@@ -100,22 +103,22 @@
     
       <google-codelab-step label="Introduction" duration="0">
         <p>ARCore is Google&#39;s platform for building augmented reality experiences. Using different APIs, ARCore enables your phone to sense its environment, understand the world and interact with information. Some of the APIs are available across Android and iOS to enable shared AR experiences.</p>
-<h2><strong>What is ARCore?</strong></h2>
+<h2 is-upgraded><strong>What is ARCore?</strong></h2>
 <p>ARCore uses three key capabilities to integrate virtual content with the real world as seen through your phone&#39;s camera:</p>
 <ul>
 <li><a href="https://developers.google.com/ar/discover/concepts#motion_tracking" target="_blank"><strong>Motion tracking</strong></a> allows the phone to understand and track its position relative to the world.</li>
 <li><a href="https://developers.google.com/ar/discover/concepts#environmental_understanding" target="_blank"><strong>Environmental understanding</strong></a> allows the phone to detect the size and location of all type of surfaces: horizontal, vertical and angled surfaces like the ground, a coffee table or walls.</li>
 <li><a href="https://developers.google.com/ar/discover/concepts#light_estimation" target="_blank"><strong>Light estimation</strong></a> allows the phone to estimate the environment&#39;s current lighting conditions.</li>
 </ul>
-<h2><strong>Supported devices</strong></h2>
+<h2 is-upgraded><strong>Supported devices</strong></h2>
 <p>ARCore is designed to work on a wide variety of qualified Android phones running Android 7.0 (Nougat) and later. A full list of all supported devices <a href="https://developers.google.com/ar/discover/supported-devices" target="_blank">is available here</a>.</p>
-<h2><strong>How does ARCore work?</strong></h2>
+<h2 is-upgraded><strong>How does ARCore work?</strong></h2>
 <p>Fundamentally, ARCore is doing two things: tracking the position of the mobile device as it moves, and building its own understanding of the real world.</p>
 <p>ARCore&#39;s motion tracking technology uses the phone&#39;s camera to identify interesting points, called features, and tracks how those points move over time. With a combination of the movement of these points and readings from the phone&#39;s inertial sensors, ARCore determines both the position and orientation of the phone as it moves through space.</p>
 <p>In addition to identifying key points, ARCore can detect flat surfaces, like a table or the floor, and can also estimate the average lighting in the area around it. These capabilities combine to enable ARCore to build its own understanding of the world around it.</p>
 <p>ARCore&#39;s understanding of the real world lets you place objects, annotations, or other information in a way that integrates seamlessly with the real world. You can place a napping kitten on the corner of your coffee table, or annotate a painting with biographical information about the artist. Motion tracking means that you can move around and view these objects from any angle, and even if you turn around and leave the room, when you come back, the kitten or annotation will be right where you left it.</p>
 <p>For a more detailed breakdown of how ARCore works, check out <a href="https://developers.google.com/ar/discover/concepts" target="_blank">fundamental concepts</a>.</p>
-<h2><strong>What you will build</strong></h2>
+<h2 is-upgraded><strong>What you will build</strong></h2>
 <table>
 <tr><td colspan="1" rowspan="1"><p>In this codelab, you&#39;re going to build an Augmented Reality application that uses ARCore and Sceneform:</p>
 <ul>
@@ -125,7 +128,7 @@
 <li>Learn about collision detection</li>
 <li>Using lights to brighten up your objects</li>
 </ul>
-</td><td colspan="1" rowspan="1"><p><img style="max-width: 298.00px" src="img/7a83878907bd8163.png"></p>
+</td><td colspan="1" rowspan="1"><p class="image-container"><img style="width: 298.00px" src="img/7a83878907bd8163.png"></p>
 </td></tr>
 </table>
 
@@ -134,9 +137,9 @@
     
       <google-codelab-step label="Adding the required dependencies" duration="0">
         <p>In order for us to start writing AR code, we need to add the ARCore and Sceneform Gradle dependencies.</p>
-<h2><strong>Adding ARCore entries to the manifest</strong></h2>
+<h2 is-upgraded><strong>Adding ARCore entries to the manifest</strong></h2>
 <p>There are two types of AR apps: <strong>AR Required</strong> and <strong>AR Optional</strong>. For the purposes of this workshop, we will be making our application AR Required.</p>
-<h3>AR Optional apps</h3>
+<h3 is-upgraded>AR Optional apps</h3>
 <p>Apps that include optional AR features that are only activated on devices that support ARCore are referred to as <em>AR Optional</em> apps. For example, an Ikea store application that has a feature for interactively placing furniture around your house, but only on devices that support ARCore, may be referred as an AR Optional app.</p>
 <ul>
 <li>AR Optional apps can be installed and run on devices that don&#39;t support ARCore.</li>
@@ -153,7 +156,7 @@
     &lt;meta-data android:name=&#34;com.google.ar.core&#34; android:value=&#34;optional&#34; /&gt;
     ...
 &lt;/application&gt;</code></pre>
-<h3>AR Required apps</h3>
+<h3 is-upgraded>AR Required apps</h3>
 <p>Apps that are not usable without AR are referred to as <em>AR Required</em> apps.</p>
 <ul>
 <li>The Play Store makes your app available only on devices that support ARCore.</li>
@@ -172,7 +175,7 @@
     &lt;meta-data android:name=&#34;com.google.ar.core&#34; android:value=&#34;required&#34; /&gt;
     ...
 &lt;/application&gt;</code></pre>
-<h2><strong>Adding the Sceneform Gradle dependencies</strong></h2>
+<h2 is-upgraded><strong>Adding the Sceneform Gradle dependencies</strong></h2>
 <p>Add the latest Sceneform library as a dependency in your <strong>app&#39;s </strong>build.gradle file:</p>
 <pre><code>android {
     // Sceneform libraries use language constructs from Java 8.
@@ -187,16 +190,16 @@ dependencies {
     ...
 
     // Provides ArFragment, and other UX resources.
-    implementation &#39;com.google.ar.sceneform.ux:sceneform-ux:1.4.0&#39;
+    implementation &#39;com.google.ar.sceneform.ux:sceneform-ux:1.9.0&#39;
 
     // Alternatively, use ArSceneView without the UX dependency.
-    implementation &#39;com.google.ar.sceneform:core:1.4.0&#39;
+    implementation &#39;com.google.ar.sceneform:core:1.9.0&#39;
 
 }</code></pre>
-<h2><strong>Other libraries we&#39;re going to use</strong></h2>
+<h2 is-upgraded><strong>Other libraries we&#39;re going to use</strong></h2>
 <p>In order to save time, please add now other dependencies we&#39;re going to use throughout the Workshop. We&#39;ll display Snackbars, so the design library needs to be added to gradle:</p>
-<pre><code>implementation &#39;com.android.support:design:28.2.1&#39;</code></pre>
-<h2><strong>Adding the ARCore Gradle dependencies (optional)</strong></h2>
+<pre><code>implementation &#39;com.android.support:design:28.0.0&#39;</code></pre>
+<h2 is-upgraded><strong>Adding the ARCore Gradle dependencies (optional)</strong></h2>
 <p>If using ARCore without Sceneform and instead using native OpenGL, add it to your Android Studio project by performing these steps:</p>
 <p>Make sure your <strong>project&#39;s </strong>build.gradle file includes Google&#39;s Maven repository:</p>
 <pre><code>allprojects {
@@ -206,7 +209,7 @@ dependencies {
 <p>Add the latest ARCore library as a dependency in your <strong>app&#39;s </strong>build.gradle file:</p>
 <pre><code>dependencies {
     ...
-    implementation &#39;com.google.ar:core:1.4.0&#39;
+    implementation &#39;com.google.ar:core:1.9.0&#39;
 }</code></pre>
 
 
@@ -214,9 +217,9 @@ dependencies {
     
       <google-codelab-step label="Your first Sceneform app" duration="0">
         <p>Sceneform empowers Android developers to work with ARCore without learning 3D graphics and OpenGL. It includes a high-level scene graph API, realistic <a href="https://en.wikipedia.org/wiki/Physically_based_rendering" target="_blank">physically based renderer</a>, an <a href="https://developers.google.com/ar/develop/java/sceneform/import-assets" target="_blank">Android Studio plugin</a> for importing, viewing, and building 3D assets, and easy integration into ARCore that makes it straightforward to build AR apps.</p>
-<h2><strong>Integrating with Sceneform</strong></h2>
+<h2 is-upgraded><strong>Integrating with Sceneform</strong></h2>
 <p>Sceneform provides two ways of integration for displaying objects: the <strong>ArFragment</strong> or <strong>ArSceneView</strong>. We&#39;ll use the <strong>ArSceneView</strong> as it allows us to get a more in-depth view over rendering, but here&#39;s how both are used.</p>
-<h2><strong>ArFragment</strong></h2>
+<h2 is-upgraded><strong>ArFragment</strong></h2>
 <p>Adding an ArFragment to your Activity is just like any Android <a href="https://developer.android.com/guide/components/fragments" target="_blank">Fragment</a>. For example, here is a sample activity.xml:</p>
 <pre><code>&lt;FrameLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
     xmlns:tools=&#34;http://schemas.android.com/tools&#34;
@@ -235,7 +238,7 @@ dependencies {
 <li>It checks whether the app has access to the camera and asks the user for permission if it has not yet been granted.</li>
 </ul>
 <p>Once complete, the fragment creates an <a href="https://developers.google.com/ar/reference/java/com/google/ar/sceneform/ArSceneView" target="_blank">ArSceneView</a> (accessible via <a href="https://developers.google.com/ar/reference/java/com/google/ar/sceneform/ux/BaseArFragment.html#getArSceneView()" target="_blank">getArSceneView()</a> and an ARCore <a href="https://developers.google.com/ar/reference/java/com/google/ar/core/Session" target="_blank">Session</a>.</p>
-<h2><strong>ArSceneView</strong></h2>
+<h2 is-upgraded><strong>ArSceneView</strong></h2>
 <p>This is the more verbose way of interacting with the AR view, as it implies making a lot of checks by yourself.</p>
 <p>Add the <strong>ArSceneView</strong> to your layout xml:</p>
 <pre><code>&lt;com.google.ar.sceneform.ArSceneView
@@ -249,14 +252,7 @@ dependencies {
 ActivityCompat.requestPermissions(
    activity, new String[] {Manifest.permission.CAMERA}, requestCode);</code></pre>
 <p>We don&#39;t have the ArFragment to guard against all possible scenarios, so we should also check that the user&#39;s device supports ARCore:</p>
-<pre><code>if (Build.VERSION.SDK_INT &lt; VERSION_CODES.N) {
-   Log.e(TAG, &#34;Sceneform requires Android N or later&#34;);
-   Toast.makeText(activity, &#34;Sceneform requires Android N or later&#34;, Toast.LENGTH_LONG).show();
-   activity.finish();
-   return false;
- }
-
- String openGlVersionString =
+<pre><code>String openGlVersionString =
      ((ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE))
          .getDeviceConfigurationInfo()
          .getGlEsVersion();
@@ -269,7 +265,7 @@ ActivityCompat.requestPermissions(
  }
  return true;
 }</code></pre>
-<h2><strong>The AR Session</strong></h2>
+<h2 is-upgraded><strong>The AR Session</strong></h2>
 <p>ARCore&#39;s Session manages the AR system&#39;s state and handles the session lifecycle. It can be viewed as the main entry point to ARCore API. This class allows the user to create a session, configure it, start/stop it, and most importantly receive frames that allow access to camera image and device pose.</p>
 <p>Every time our Activity is resumed, we should make the basic sanity check of ensuring our ArSceneView&#39;s ARCore Session instance. And seeing that the Session is highly dependant on whether ARCore is installed on the user&#39;s device, we should check for that as well:</p>
 <pre><code>ArCoreApk.getInstance().requestInstall(activity, !installAlreadyRequested);</code></pre>
@@ -288,7 +284,7 @@ ActivityCompat.requestPermissions(
 
    arSceneView.setupSession(session);
 }</code></pre>
-<h2><strong>Connecting ArSceneView to our Activity&#39;s lifecycle</strong></h2>
+<h2 is-upgraded><strong>Connecting ArSceneView to our Activity&#39;s lifecycle</strong></h2>
 <p>As we&#39;ve elected to go with the more complicated ArSceneView, we now realize that since it&#39;s a View, it has no information about the lifecycle (unlike the Fragment). Augmented Reality implies heavy processing, therefore we need to give our View hints about what our Activity&#39;s state is for the Resumed, Paused and Destroyed states.</p>
 <pre><code>@Override
 protected void onResume() {
@@ -324,7 +320,7 @@ protected void onDestroy() {
        arSceneView.destroy();
    }
 }</code></pre>
-<h2><strong>Focusing on the Augmented Reality</strong></h2>
+<h2 is-upgraded><strong>Focusing on the Augmented Reality</strong></h2>
 <p>To help the user focus on what our device sees through its camera, we should also make sure our app is full screen. This is the standard way that you&#39;ve used before. Hiding the navigation bar and buttons but allowing the user to swipe to reveal them:</p>
 <pre><code>@Override
 public void onWindowFocusChanged(boolean hasFocus) {
@@ -343,7 +339,7 @@ public void onWindowFocusChanged(boolean hasFocus) {
        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
    }
 }</code></pre>
-<h2><strong>That&#39;s it!</strong></h2>
+<h2 is-upgraded><strong>That&#39;s it!</strong></h2>
 <p>You now have a basic AR app that allows you to view the device&#39;s camera and visualize flat surfaces, albeit with the default graphics. It doesn&#39;t do anything useful or fun, but it works!</p>
 
 
@@ -352,24 +348,24 @@ public void onWindowFocusChanged(boolean hasFocus) {
       <google-codelab-step label="Some AR technicalities" duration="0">
         <p>We&#39;ve been using a lot of Sceneform until now and you can&#39;t actually see when Google&#39;s AR framework steps in. The thing is, Sceneform is actually built upon ARCore so that technicalities are abstract until you need to do something a little more special. For basic Augmented Reality, you won&#39;t even need to interact with the augmented camera or positioning system. You&#39;ll only draw your objects and define their interaction.</p>
 <p>Nevertheless, let&#39;s talk a bit about ARCore. This framework, at its base, will allow you to preview the camera frame (as it sees it), and provide you with features detected in the world. These features can be planes (horizontal or vertical), real objects or images we&#39;ve been tracking. That&#39;s it. The rest is left to the 3D rendering API you will be using (either OpenGL or Sceneform) to make sure the virtual objects we are adding seem like part of the real world.</p>
-<h2><strong>Session</strong></h2>
+<h2 is-upgraded><strong>Session</strong></h2>
 <p>The ARCore Session can be considered as the main entry point in the entire API. You will need to create one, configure it, tell it when to start and stop. However, it&#39;s main job remains in receiving both the camera frames that are going to be processed and the device&#39;s pose when taking the said camera frames.</p>
 <p>After setting it up as required, our remaining interaction with the Session will resume to:</p>
 <ul>
 <li>Obtaining the current list of tracked objects (we&#39;ll see more about Trackables in a bit)</li>
 <li>Obtaining the list of anchored points in the virtual space</li>
 </ul>
-<h2><strong>Trackable</strong></h2>
+<h2 is-upgraded><strong>Trackable</strong></h2>
 <p>As we&#39;ve said before, one of ARCore&#39;s most important jobs is to track real objects and features and provide you with sufficient information related to them. We&#39;ll use this information to anchor our virtual objects somewhere in the real world, as we cannot just let them float around.</p>
 <p>One extra reason we need Trackables is that ARCore automatically updates their location as it gathers more information about the real world. The more you move around, the more precise it will be in pinpointing their 3D position.</p>
-<h2><strong>Anchor</strong></h2>
+<h2 is-upgraded><strong>Anchor</strong></h2>
 <p>An anchor is closely related to a Trackable, as it defines a fixed location and orientation in the real world. To make sure it doesn&#39;t wiggle around and it stays fixed on that location, ARCore continuously updates it as it gathers knowledge.</p>
 <p>Our interaction with Anchors will consist in tying them to our renderable objects. They represent our models&#39; positions in space.</p>
-<h2><strong>Plane</strong></h2>
+<h2 is-upgraded><strong>Plane</strong></h2>
 <p>This is a representation of a flat planar surface detected by ARCore and the main Trackable we&#39;ll use to anchor our objects to. In most AR applications, models are rendered on a flat surface, like a table or the floor.</p>
-<h2><strong>HitResult</strong></h2>
+<h2 is-upgraded><strong>HitResult</strong></h2>
 <p>A lot of AR applications will use gestures to increase the immersiveness of your experience. Also, we&#39;ve talked about Planes and Anchors. But how do we tie them together? This is where HitResults come into play. When a user performs a tap gesture for example, we can perform the intersection of the tap with a detected Plan and generate an Anchor for that position. This will now represent our object&#39;s location.</p>
-<h2><strong>Node</strong></h2>
+<h2 is-upgraded><strong>Node</strong></h2>
 <p>When using Sceneform to render our application, we need to start looking at our scene as a collection of 3D model graphs. An independent portion of the virtual world may be seen as a graph of objects attached to the scene, closely related one to another. A Node represents a transformation within the scene graph&#39;s hierarchy. It can contain a renderable for the rendering engine to render or other transformations. Each node can have an arbitrary number of child nodes but only one parent, which may be another node, or the scene.</p>
 <p>The Node and the graph structure it resides in has many advantages:</p>
 <ul>
@@ -383,24 +379,24 @@ public void onWindowFocusChanged(boolean hasFocus) {
       </google-codelab-step>
     
       <google-codelab-step label="Importing and loading 3D models" duration="0">
-        <p>Sceneform supports 3D assets in OBJ, FBX, and glTF formats. Please download <a href="https://drive.google.com/open?id=1DTntUu2XVIfdH1qjdccp9lrSRejhq9zI" target="_blank">these glTF assets</a> that we&#39;re going to use throughout the session.</p>
+        <p>Sceneform supports 3D assets in OBJ, FBX, and glTF formats. Please download <a href="https://drive.google.com/open?id=1gQQyzaelynf8Z_kAXyQ5Bb2DC4EruuR4" target="_blank">these glTF assets</a> that we&#39;re going to use throughout the session.</p>
 <p>Follow these steps to import a new 3D asset:</p>
 <ol type="1" start="1">
 <li>Verify that your project&#39;s app folder contains a sampledata folder. To create the folder, right-click on the app folder in the <strong>Project</strong> window, then select <strong>New &gt; Sample Data Directory</strong>. The sampledata folder is part of your Android Studio project, but its contents will not be included in your APK.</li>
 <li>Copy <em>andy, distillery </em>and <em>hay</em> 3D model source asset folders into the sampledata folder. Do not copy these source files into your project&#39;s assets or res folder, as this will cause them to be included in your APK unnecessarily.</li>
 <li>Right click the 3D model source asset (the gltf file) and select <strong>Import Sceneform Asset</strong> to begin the import process. The values are used by the sceneform.asset() entry in the <strong>app&#39;s </strong>build.gradle, and determine where the *.sfa and *.sfb files will be generated in your project. We&#39;ll use the default values for now.</li>
 </ol>
-<p><img style="max-width: 610.00px" src="img/4c89296aa7404e21.png"></p>
+<p class="image-container"><img style="width: 610.00px" src="img/4c89296aa7404e21.png"></p>
 <ol type="1" start="4">
 <li>Click <strong>Finish</strong> to begin the import process.</li>
 <li>Repeat steps 3 and 4 for all assets.</li>
 </ol>
-<h2><strong>Editing 3D model parameters</strong></h2>
+<h2 is-upgraded><strong>Editing 3D model parameters</strong></h2>
 <p>glTF is the ideal format for us as it has been designed to be human readable. The advantage comes when we need to update certain parameters.</p>
 <p>For instance, we want to make the andy and distillery models half the size. In order to do that, we only need to open their respective <em>sfa</em> file from the sampledata folder, find our entry and update its value. Please do that now:</p>
-<p><img style="max-width: 624.00px" src="img/818c4284654b5a24.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/818c4284654b5a24.png"></p>
 <p>As you can see, changing parameters such as material, textures or alpha maps can easily be changed using the glTF format.</p>
-<h2><strong>Loading 3D models</strong></h2>
+<h2 is-upgraded><strong>Loading 3D models</strong></h2>
 <p>In order for our models to be rendered by Sceneform, we need to load them into memory first. Doing this on demand (when we decide to render them) would result in massive input delays.</p>
 <p>Sceneform&#39;s API allows us to asynchronously parse the <em>sfb</em> file created earlier when importing the models, as loading large objects can be time consuming (we don&#39;t want to delay the UI thread). For this purpose, we are going to use ModelRenderable which can return a classic Java CompletableFuture. After all our models are loaded into memory, we can simply use a flag to mark that this step is complete.</p>
 <p>Run this step as soon as possible, for example when the Activity is created:</p>
@@ -411,82 +407,86 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 
 private void loadModels() {
-   CompletableFuture&lt;ModelRenderable&gt; andyStage =
-           ModelRenderable.builder().setSource(this, Uri.parse(&#34;andy.sfb&#34;)).build();
-   CompletableFuture&lt;ModelRenderable&gt; distilleryStage =
-           ModelRenderable.builder().setSource(this, Uri.parse(&#34;distillery.sfb&#34;)).build();
-   CompletableFuture&lt;ModelRenderable&gt; hayStage =
-           ModelRenderable.builder().setSource(this, Uri.parse(&#34;hay.sfb&#34;)).build();
+        // Load our models and the menu layout as a 3D object
+        CompletableFuture&lt;ModelRenderable&gt; baseStage =
+                ModelRenderable.builder().setSource(this, Uri.parse(&#34;cannon_base.sfb&#34;)).build();
+        CompletableFuture&lt;ModelRenderable&gt; forkStage =
+                ModelRenderable.builder().setSource(this, Uri.parse(&#34;cannon_fork.sfb&#34;)).build();
+        CompletableFuture&lt;ModelRenderable&gt; barrelBaseStage =
+                ModelRenderable.builder().setSource(this, Uri.parse(&#34;cannon_barrel_base.sfb&#34;)).build();
+        CompletableFuture&lt;ModelRenderable&gt; barrelTopStage =
+                ModelRenderable.builder().setSource(this, Uri.parse(&#34;cannon_barrel_top.sfb&#34;)).build();
 
-   CompletableFuture.allOf(
-           andyStage,
-           distilleryStage,
-           hayStage
-   ).handle((notUsed, throwable) -&gt; {
-       try {
-           andyRenderable = andyStage.get();
-           distilleryRenderable = distilleryStage.get();
-           hayRenderable = hayStage.get();
+        CompletableFuture.allOf(
+                baseStage,
+                forkStage,
+                barrelBaseStage,
+                barrelTopStage
+        ).handle((notUsed, throwable) -&gt; {
+            try {
+                baseRenderable = baseStage.get();
+                forkRenderable = forkStage.get();
+                barrelBaseRenderable = barrelBaseStage.get();
+                barrelTopRenderable = barrelTopStage.get();
 
-           hasFinishedLoading = true;
-       } catch (InterruptedException | ExecutionException e) {
-           Snackbar.make(findViewById(android.R.id.content), &#34;Couldn&#39;t load renderables&#34;, Snackbar.LENGTH_LONG).show();
-       }
+                hasFinishedLoading = true;
+            } catch (InterruptedException | ExecutionException e) {
+                Snackbar.make(findViewById(android.R.id.content), &#34;Couldn&#39;t load renderables&#34;, Snackbar.LENGTH_LONG).show();
+            }
 
-       return null;
-   });
+            return null;
+        });
 }</code></pre>
-<h2><strong>Translating Android views into 3D space</strong></h2>
+<h2 is-upgraded><strong>Translating Android views into 3D space</strong></h2>
 <p>One very useful feature that Sceneform provides is translating a standard Android layout into a 3D view and render it into the ARCore provided camera frames. For this purpose, all we need to do is create our layout and append a new Renderable to our CompletableFuture stack.</p>
 <p>We will be implementing a menu so the user can change which 3D model is going to be rendered. For now, the following layout will be fine:</p>
-<h3>view_menu.xml</h3>
+<h3 is-upgraded>view_menu.xml</h3>
 <pre><code>&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;
 &lt;LinearLayout xmlns:android=&#34;http://schemas.android.com/apk/res/android&#34;
-   android:orientation=&#34;vertical&#34;
-   android:layout_width=&#34;wrap_content&#34;
-   android:layout_height=&#34;wrap_content&#34;
-   android:padding=&#34;4dp&#34;
-   android:background=&#34;#444444FF&#34;&gt;
+    android:orientation=&#34;vertical&#34;
+    android:layout_width=&#34;wrap_content&#34;
+    android:layout_height=&#34;wrap_content&#34;
+    android:padding=&#34;4dp&#34;
+    android:background=&#34;#444444FF&#34;&gt;
 
-   &lt;TextView
-       android:id=&#34;@+id/item_andy&#34;
-       android:layout_width=&#34;wrap_content&#34;
-       android:layout_height=&#34;wrap_content&#34;
-       android:text=&#34;Andy&#34;
-       android:textColor=&#34;@android:color/white&#34;/&gt;
+    &lt;TextView
+        android:id=&#34;@+id/item_rotate_hor&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:text=&#34;Rotate horizontally&#34;
+        android:textColor=&#34;@android:color/white&#34;/&gt;
 
-   &lt;TextView
-       android:id=&#34;@+id/item_distillery&#34;
-       android:layout_width=&#34;wrap_content&#34;
-       android:layout_height=&#34;wrap_content&#34;
-       android:text=&#34;Distillery&#34;
-       android:textColor=&#34;@android:color/white&#34;/&gt;
+    &lt;TextView
+        android:id=&#34;@+id/item_rotate_vert&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:text=&#34;Rotate vertically&#34;
+        android:textColor=&#34;@android:color/white&#34;/&gt;
 
-   &lt;TextView
-       android:id=&#34;@+id/item_hay&#34;
-       android:layout_width=&#34;wrap_content&#34;
-       android:layout_height=&#34;wrap_content&#34;
-       android:text=&#34;Hay&#34;
-       android:textColor=&#34;@android:color/white&#34;/&gt;
-
+    &lt;TextView
+        android:id=&#34;@+id/item_fire&#34;
+        android:layout_width=&#34;wrap_content&#34;
+        android:layout_height=&#34;wrap_content&#34;
+        android:text=&#34;FIRE&#34;
+        android:textColor=&#34;@android:color/white&#34;/&gt;
 &lt;/LinearLayout&gt;</code></pre>
 <p>Exactly as we&#39;ve used the ModelRenderable to load 3D assets, we&#39;ll use its sibling class, ViewRenderable. Create its corresponding future and make sure we are handling taps inside the view:</p>
 <pre><code>CompletableFuture&lt;ViewRenderable&gt; menuStage =
-       ViewRenderable.builder().setView(this, R.layout.view_menu).build();
+                ViewRenderable.builder().setView(this, R.layout.view_menu).build();
 
 ...
 
-menuRenderable = menuStage.get();
-menuRenderable.getView().findViewById(R.id.item_andy).setOnClickListener(this::onMenuItemClicked);
-menuRenderable.getView().findViewById(R.id.item_distillery).setOnClickListener(this::onMenuItemClicked);
-menuRenderable.getView().findViewById(R.id.item_hay).setOnClickListener(this::onMenuItemClicked);</code></pre>
+menuRenderable = menuStage.get(); 
+menuRenderable.getView().findViewById(R.id.item_rotate_hor).setOnClickListener(this::onMenuItemClicked); 
+menuRenderable.getView().findViewById(R.id.item_rotate_vert).setOnClickListener(this::onMenuItemClicked); 
+menuRenderable.getView().findViewById(R.id.item_fire).setOnClickListener(this::onMenuItemClicked);</code></pre>
 <p>When the user selects an option from our menu, we will need to match it to the correct 3D renderable that we&#39;ve loaded earlier. We&#39;ll see how to that after we successfully display our menu.</p>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Interacting with the world" duration="0">
-        <h2><strong>Providing feedback to the user</strong></h2>
+        <h2 is-upgraded><strong>Providing feedback to the user</strong></h2>
 <p>Before we could interact with the world through our phone, we have to make sure that ARCore is tracking at least one plane. Otherwise, we have no suitable Trackable to which we can attach our model&#39;s Anchor, and the user can&#39;t interact with our app.</p>
 <p>In these cases, it is better to show some kind of feedback to the user, so he knows the state of the app. We&#39;ll work with a simple Snackbar for now:</p>
 <pre><code>private void showLoadingMessage() {
@@ -519,10 +519,6 @@ protected void onCreate(Bundle savedInstanceState) {
    .getScene()
    .addOnUpdateListener(
        frameTime -&gt; {
-           // We&#39;ve not displayed the loading Snackbar, no point in doing anything
-           if (loadingSnackbar == null) {
-               return;
-           }
            // Check if a camera frame exists
            Frame frame = arSceneView.getArFrame();
            if (frame == null) {
@@ -536,12 +532,12 @@ protected void onCreate(Bundle savedInstanceState) {
            for (Plane plane : frame.getUpdatedTrackables(Plane.class)) {
                if (plane.getTrackingState() == TrackingState.TRACKING) {
                    hideLoadingMessage();
-                   return;
+                   break;
                }
            }
        });
 }</code></pre>
-<h2><strong>Handling user input</strong></h2>
+<h2 is-upgraded><strong>Handling user input</strong></h2>
 <p>In order for us to start rendering our models, we need to specify their positions. Standard Android components come into play, as a simple GestureDetector is all that&#39;s required for us to detect a tap:</p>
 <pre><code>gestureDetector =
        new GestureDetector(
@@ -581,173 +577,188 @@ protected void onCreate(Bundle savedInstanceState) {
            Trackable trackable = hit.getTrackable();
            if (trackable instanceof Plane
                    &amp;&amp; ((Plane) trackable).isPoseInPolygon(hit.getHitPose())) {
-               displayMenu(hit.createAnchor());
+               // We have a plane hit, display our object at the location
+               renderCannon(hit.createAnchor());
            }
        }
    }
 }</code></pre>
-<h2><strong>Displaying renderables</strong></h2>
+<h2 is-upgraded><strong>Displaying renderables</strong></h2>
 <p>We&#39;ve successfully determined when and if the user tapped a detected Plane. Let&#39;s now do something useful with that information. We want to:</p>
 <ul>
-<li>Display the menu we implemented earlier at the tap location, but don&#39;t display it more than once</li>
-<li>Display the correct 3D model at the menu location (depending on the user&#39;s choice)</li>
-<li>Make the menu disappear</li>
+<li>Display the 3D model composed of all individual assets at the tap location </li>
+<li>Display the menu we implemented earlier when the user taps on the cannon, but don&#39;t display it more than once</li>
+<li>Make the menu disappear after selecting an option</li>
 </ul>
 <p>In order to make a Renderable appear on the screen, we need an Anchor to attach it to. We have that part covered by the tap handling mechanism. Next, we need to create a Sceneform Node object that attaches to the aforementioned Anchor and renders the correct Renderable.</p>
-<p>To make sure we only display our menu once, we can keep track of the Anchor we&#39;ve used to display it. If we want to stop displaying a model, all we need to do is detach its Anchor. One extra thing we need to make sure of is saving the base Node that&#39;s rendering our menu. Because we want to replace it with a 3D model, we need a way to stop rendering the menu, and that&#39;s by using the <em>setEnabled</em> method on the corresponding Node.</p>
-<pre><code>private void displayMenu(Anchor anchor) {
-   // Make sure we don&#39;t have more than one Menu displayed at a time
-   if (menuAnchor != null) {
-       menuAnchor.detach();
-   }
-   // Mark that we&#39;ve displayed the menu
-   menuAnchor = anchor;
-
-   if (menuAnchorNode == null) {
-       // Actually render the menu
-       Node node = new Node();
-       node.setRenderable(menuRenderable);
-
-       menuAnchorNode = new AnchorNode();
-       menuAnchorNode.setParent(arSceneView.getScene());
-       menuAnchorNode.addChild(node);
-
-   }
-   menuAnchorNode.setAnchor(anchor);
-   menuAnchorNode.setEnabled(true);
-}</code></pre>
-<p>We can now implement the <em>onMenuItemClicked </em>method as per our requirements. We&#39;ll replace the Node associated with our menu Anchor with one that renders the chosen 3D model. We also make sure that we&#39;re telling Sceneform to stop rendering the menu at the same location:</p>
-<pre><code>private Node renderNodeForAnchor(Renderable renderable, Anchor anchor) {
-   Node node = new Node();
-   node.setRenderable(renderable);
-
-   AnchorNode anchorNode = new AnchorNode(anchor);
-   anchorNode.setParent(arSceneView.getScene());
-   anchorNode.addChild(node);
-
-   return node;
-}
-
-private void onMenuItemClicked(View view) {
-   if (menuAnchor != null) {
-       switch (view.getId()) {
-           case R.id.item_distillery:
-               renderNodeForAnchor(distilleryRenderable, menuAnchor);
-               break;
-           case R.id.item_hay:
-               renderNodeForAnchor(hayRenderable, menuAnchor);
-               break;
-           default:
-               renderNodeForAnchor(andyRenderable, menuAnchor);
-               break;
-       }
-       // We don&#39;t have a menu displayed anymore
-       menuAnchor = null;
-       menuAnchorNode.setEnabled(false);
-   }
-}</code></pre>
-
-
-      </google-codelab-step>
-    
-      <google-codelab-step label="Interacting with the virtual world" duration="0">
-        <p>We&#39;ve seen how user gestures over the real world shown by his device can be managed and actions can be performed as a consequence at the specified position. We will now see how we can interact with the 3D objects we&#39;ve added to our scene and how we can animate them.</p>
-<p>Our goal for this chapter will be making Andy go towards the hay or distillery (work or fun).</p>
-<p>First of all, we should limit the number of 3D model types to one, so we avoid any confusion for Andy:</p>
-<pre><code>private Map&lt;Renderable, Node&gt; displayedObjects;
-
-private Node renderNodeForAnchor(Renderable renderable, Anchor anchor) {
-   ...
-
-   displayedObjects.put(renderable, node);
-
-   return node;
-}
-
-private void onMenuItemClicked(View view) {
-   if (menuAnchor != null) {
-       switch (view.getId()) {
-           case R.id.item_distillery:
-               if (displayedObjects.containsKey(distilleryRenderable)) {
-                   displayedObjects.get(distilleryRenderable).getAnchor().detach();
-               }
-               renderNodeForAnchor(distilleryRenderable, menuAnchor);
-               break;
-           case R.id.item_hay:
-               if (displayedObjects.containsKey(hayRenderable)) {
-                   displayedObjects.get(hayRenderable).getAnchor().detach();
-               }
-               renderNodeForAnchor(hayRenderable, menuAnchor);
-               break;
-           default:
-               if (displayedObjects.containsKey(andyRenderable)) {
-                   displayedObjects.get(andyRenderable).getAnchor().detach();
-               }
-               renderNodeForAnchor(andyRenderable, menuAnchor);
-               break;
-       }
-       // We don&#39;t have a menu displayed anymore
-       menuAnchor = null;
-       menuAnchorNode.setEnabled(false);
-   }
-}
-</code></pre>
 <p>One important thing you need to remember is that Sceneform&#39;s Nodes can be arranged as a tree, by using the parent / children relationships. Very complex 3D structures can be created this way. When a parent is disabled (not being drawn anymore), all its children are also disabled. There are a lot of other parameters that transfer to its children.</p>
 <p>In order to  change a Node&#39;s position, we have to alternatives we need to choose from:</p>
 <ul>
 <li>Changing the local position. The local position refers to the position of the node relative to its tree (therefore its parent). Changing this position won&#39;t affect its children.</li>
 <li>Changing the world position. The world position refers to the position of the subtree relative to the scene itself. Changing this will also move the node&#39;s children in the tree.</li>
 </ul>
-<p>In our case, it doesn&#39;t make much difference which way we go, as our Node trees contain a single Renderable and can&#39;t affect others.</p>
-<p>The second phase is that when we&#39;re doing movement, we don&#39;t want to change the model&#39;s position from the start to its destination instantaneously. That would be weird. We want to create a smooth movement between the two points. For this purpose, we can use the standard Android ObjectAnimator and smoothly interpolate this transition:</p>
-<pre><code>private void animateNodeMovement(Node start, Node destination) {
-   ObjectAnimator movementAnimator = new ObjectAnimator();
-   Vector3 startPosition = start.getLocalPosition();
-   Vector3 endPosition = Vector3.subtract(destination.getWorldPosition(), start.getWorldPosition());
-   movementAnimator.setObjectValues(startPosition, endPosition);
-   movementAnimator.setPropertyName(&#34;localPosition&#34;);
-   movementAnimator.setEvaluator(new Vector3Evaluator());
-   movementAnimator.setInterpolator(new LinearInterpolator());
-   movementAnimator.setDuration(2000);
-   movementAnimator.setTarget(start);
-   movementAnimator.start();
+<p>In order to display our cannon object, we need to be able to render a composite 3D model that automatically renders all its components.</p>
+<pre><code>private void renderCannon(Anchor anchor) {
+        if (cannonAnchor != null) {
+            cannonAnchor.detach();
+        }
+        cannonAnchor = anchor;
+
+        baseNode = new Node();
+        baseNode.setRenderable(baseRenderable);
+
+        forkNode = new Node();
+        forkNode.setRenderable(forkRenderable);
+        baseNode.addChild(forkNode);
+
+        barrelBaseNode = new Node();
+        barrelBaseNode.setRenderable(barrelBaseRenderable);
+        forkNode.addChild(barrelBaseNode);
+
+        barrelTopNode = new Node();
+        barrelTopNode.setRenderable(barrelTopRenderable);
+        barrelBaseNode.addChild(barrelTopNode);
+
+        AnchorNode anchorNode = new AnchorNode(anchor);
+        anchorNode.setParent(arSceneView.getScene());
+        anchorNode.addChild(baseNode);
 }</code></pre>
-<p>We now only need to know when to actually trigger this animation and between which nodes. For that, Sceneform provides a Touch and a Tap listener for rendered Nodes. Update our menu item clicked listener and mark the start and end Nodes as required:</p>
-<pre><code>private void onMenuItemClicked(View view) {
-   if (menuAnchor != null) {
-       switch (view.getId()) {
-           case R.id.item_distillery:
-               if (displayedObjects.containsKey(distilleryRenderable)) {
-                   displayedObjects.get(distilleryRenderable).getAnchor().detach();
-               }
-               Node distilleryNode = renderNodeForAnchor(distilleryRenderable, menuAnchor);
-               distilleryNode.setOnTapListener((hitTestResult, motionEvent) -&gt; {
-                   animateNodeMovement(animatedNode, distilleryNode);
-               });
-               break;
-           case R.id.item_hay:
-               if (displayedObjects.containsKey(hayRenderable)) {
-                   displayedObjects.get(hayRenderable).getAnchor().detach();
-               }
-               Node hayNode = renderNodeForAnchor(hayRenderable, menuAnchor);
-               hayNode.setOnTapListener((hitTestResult, motionEvent) -&gt; {
-                   animateNodeMovement(animatedNode, hayNode);
-               });
-               break;
-           default:
-               if (displayedObjects.containsKey(andyRenderable)) {
-                   displayedObjects.get(andyRenderable).getAnchor().detach();
-               }
-               Node andyNode = renderNodeForAnchor(andyRenderable, menuAnchor);
-               andyNode.setOnTapListener((hitTestResult, motionEvent) -&gt; {
-                   animatedNode = andyNode;
-               });
-               break;
-       }
-       // We don&#39;t have a menu displayed anymore
-       menuAnchor = null;
-       menuAnchorNode.setEnabled(false);
+<p>To make sure we only display our menu once, we can keep track of the menu Node we&#39;ve used to display it. If we want to stop displaying a model, all we need to do is detach it from its parent. </p>
+<pre><code>private void displayMenu() {
+   // Create a Node for the menu if we haven&#39;t created it before (if we&#39;ve displayed it before)
+   if (menuNode != null) {
+       baseNode.removeChild(menuNode);
    }
+   // Add the menu node
+   menuNode = new Node();
+   menuNode.setRenderable(menuRenderable);
+   // Move it a bit upwards so it&#39;s visible above the cannon
+   menuNode.setLocalPosition(new Vector3(0.0f, 0.3f, 0.0f));
+
+   baseNode.addChild(menuNode);
+}</code></pre>
+<p>We can now implement the <em>onMenuItemClicked </em>method as per our requirements. We&#39;ll mark the required flags to tell our update loop to keep rotating or fire the cannon once. We also make sure that we&#39;re telling Sceneform to stop rendering the menu at the same time:</p>
+<pre><code>private void onMenuItemClicked(View view) {
+   // A menu item is clicked, check if the item is not being rendered (maximum one)
+   // Then render it and setup the tap listeners so Andy&#39;s movement animation works
+   switch (view.getId()) {
+       case R.id.item_rotate_hor:
+           isRotatingHorizontally = !isRotatingHorizontally;
+           break;
+       case R.id.item_rotate_vert:
+           isRotatingVertically = !isRotatingVertically;
+           break;
+       case R.id.item_fire:
+       default:
+           fire();
+           break;
+   }
+   // We don&#39;t have a menu displayed anymore
+   baseNode.removeChild(menuNode);
+   menuNode = null;
+}
+</code></pre>
+
+
+      </google-codelab-step>
+    
+      <google-codelab-step label="Interacting with the virtual world" duration="0">
+        <p>We&#39;ve seen how user gestures over the real world shown by his device can be managed and actions can be performed as a consequence at the specified position. We will now see how we can interact with the 3D objects we&#39;ve added to our scene and how we can animate them.</p>
+<p>Our goal for this chapter will be to display the menu when one or more of the cannon&#39;s components are </p>
+<p>The first thing we need to do is tell ARCore to notify us when a Node has been tapped. We do this by adding an OnTapListener on the required Nodes:</p>
+<pre><code>private void renderCannon(Anchor anchor) {
+        if (cannonAnchor != null) {
+            cannonAnchor.detach();
+        }
+        cannonAnchor = anchor;
+
+        baseNode = new Node();
+        baseNode.setRenderable(baseRenderable);
+
+        forkNode = new Node();
+        forkNode.setRenderable(forkRenderable);
+        baseNode.addChild(forkNode);
+
+        barrelBaseNode = new Node();
+        barrelBaseNode.setRenderable(barrelBaseRenderable);
+        forkNode.addChild(barrelBaseNode);
+
+        barrelTopNode = new Node();
+        barrelTopNode.setRenderable(barrelTopRenderable);
+        barrelBaseNode.addChild(barrelTopNode);
+
+        AnchorNode anchorNode = new AnchorNode(anchor);
+        anchorNode.setParent(arSceneView.getScene());
+        anchorNode.addChild(baseNode);
+
+        baseNode.setOnTapListener((hitTestResult, motionEvent) -&gt; displayMenu());
+        forkNode.setOnTapListener((hitTestResult, motionEvent) -&gt; displayMenu());
+}</code></pre>
+<p>The second phase is that when we&#39;re doing movement, we don&#39;t want to change the model&#39;s position from the start to its destination instantaneously. That would be weird. We want to create a smooth movement between the two points. For the first exercise, we will be updating our model&#39;s parameters every frame, so it will seem smooth like butter.</p>
+<p>We will be rotating the cannon&#39;s barrel on the horizontal or vertical axis for 30 degrees continuously, depending on which option was selected in the menu.</p>
+<pre><code>private void rotateHorizontally() {
+   forkNode.setLocalRotation(Quaternion.axisAngle(new Vector3(0.0f, 1.0f, 0.0f), angle));
+   angle += qty;
+   if (angle &gt;= 30f) {
+       qty = -0.2f;
+   } else if (angle &lt;= 0) {
+       qty = 0.2f;
+   }
+}
+
+private void rotateVertically() {
+   forkNode.setLocalRotation(Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), -angle));
+   angle += qty;
+   if (angle &gt;= 30f) {
+       qty = -0.2f;
+   } else if (angle &lt;= 0) {
+       qty = 0.2f;
+   }
+}</code></pre>
+<p>We now need to check on every frame if our cannon needs to be rotating or not, and call the corresponding method if that&#39;s true. For that purpose, we either inherit from the Node class and overwrite <em>onUpdate</em> or use the Scene OnUpdateListener that we set up earlier.</p>
+<pre><code>arSceneView
+   .getScene()
+   .addOnUpdateListener(
+       frameTime -&gt; {
+           ...
+           // If we&#39;re rotating our cannon, do that here
+           if (isRotatingHorizontally) {
+               rotateHorizontally();
+           }
+           if (isRotatingVertically) {
+               rotateVertically();
+           }
+       });</code></pre>
+<p>Last piece in the animation example is using a standard Android animator to define a complex series of movements or transformations. We will be implementing a recoil animation using an <em>ObjectAnimator</em>.</p>
+<pre><code>private void fire() {
+   Vector3 startPos = barrelTopNode.getLocalPosition();
+   Vector3 endPos = new Vector3(startPos.x, startPos.y, startPos.z - 0.1f);
+   ObjectAnimator animator = ObjectAnimator.ofObject(barrelTopNode, &#34;localPosition&#34;, new Vector3Evaluator(), endPos);
+   animator.setInterpolator(new OvershootInterpolator());
+   animator.setDuration(200);
+   animator.addListener(new Animator.AnimatorListener() {
+       @Override
+       public void onAnimationStart(Animator animation) {}
+
+       @Override
+       public void onAnimationEnd(Animator animation) {
+           recoilBack(startPos);
+       }
+
+       @Override
+       public void onAnimationCancel(Animator animation) {}
+
+       @Override
+       public void onAnimationRepeat(Animator animation) {}
+   });
+   animator.start();
+}
+
+private void recoilBack(Vector3 endPos) {
+   ObjectAnimator animator = ObjectAnimator.ofObject(barrelTopNode, &#34;localPosition&#34;, new Vector3Evaluator(), endPos);
+   animator.setInterpolator(new LinearInterpolator());
+   animator.setDuration(1000);
+   animator.start();
 }</code></pre>
 <p>There are three main properties we can alter to make our scene more interactive: position, rotation and scale. By working with them, we can create interesting and engaging interactions.</p>
 
@@ -755,16 +766,16 @@ private void onMenuItemClicked(View view) {
       </google-codelab-step>
     
       <google-codelab-step label="Lighting" duration="0">
-        <h2>Environmental light</h2>
+        <h2 is-upgraded>Environmental light</h2>
 <p>ARCore and Sceneform provide extensive support in lighting of our models.</p>
 <p>The first and foremost feature is approximating the intensity and direction of the natural light in the environment. These parameters are then changing how our model is being rendered, it can be more lit or darker, increasing the realism of the scene.</p>
-<p><img style="max-width: 624.00px" src="img/62ebd92ff3c641a3.png"></p>
+<p class="image-container"><img style="width: 624.00px" src="img/62ebd92ff3c641a3.jpeg"></p>
 <p>The second feature of the environmental lighting is its ability to cast shadows of your rendered objects. One important thing to remember is that:</p>
 <ul>
 <li>Lights and Renderables (models that are reflective) can cast shadows</li>
 <li>Renderables and the PlaneRenderer (detected planes) can receive and display shadows</li>
 </ul>
-<h2><strong>Additional lights</strong></h2>
+<h2 is-upgraded><strong>Additional lights</strong></h2>
 <p>If we expect the environment to be poorly lit or our scene demands it, we can add more lighting in our scene by using the Light Sceneform class. We have a couple of light types we can use:</p>
 <ul>
 <li>Directional. An infinitely far away, purely directional light</li>
@@ -772,19 +783,27 @@ private void onMenuItemClicked(View view) {
 <li>Spotlight. Similar to a point light but radiating light in a cone rather than all directions</li>
 </ul>
 <p>After we&#39;ve set all parameters for our light, we can go ahead and set it on one of our Nodes so we can set its location and bind it to our Scene. Just remember that no additional lights can actually brighten the natural environment!</p>
-<pre><code>private void lightUpAndy(Node andyNode) {
-   Light yellowSpotlight = Light.builder(Light.Type.SPOTLIGHT)
-           .setColor(new Color(android.graphics.Color.YELLOW))
-           .setShadowCastingEnabled(true)
-           .build();
-   andyNode.setLight(yellowSpotlight);
+<pre><code>private void lightUpNode(Node node) {
+   if (lightNode == null) {
+       Light yellowSpotlight = Light.builder(Light.Type.POINT)
+               .setColor(new Color(android.graphics.Color.WHITE))
+               .setShadowCastingEnabled(true)
+               .build();
+       lightNode = new Node();
+       lightNode.setLight(yellowSpotlight);
+       lightNode.setLocalPosition(new Vector3(0.0f, 0.5f, 0.0f));
+       node.addChild(lightNode);
+   } else {
+       node.removeChild(lightNode);
+       lightNode = null;
+   }
 }</code></pre>
 
 
       </google-codelab-step>
     
       <google-codelab-step label="Extra functionality" duration="0">
-        <h2><strong>Customizing the PlaneRenderer</strong></h2>
+        <h2 is-upgraded><strong>Customizing the PlaneRenderer</strong></h2>
 <p>By default, Sceneform renders detected planes using a series of dots drawn over them. Depending on our app&#39;s desired behavior, we can disable that altogether or change the texture drawn over them.</p>
 <p>Download <a href="https://drive.google.com/open?id=1Xfqm3CtLPwbtXPREhsjEEuuBd3ma4Kk_" target="_blank">this texture</a> and lets make the planes more funky. First of all, copy the image to your drawables folder. Afterwards, create a Texture sampler to go with our image, and set it to our ArSceneView. Be careful though, there are some async operations going on:</p>
 <pre><code>private void setPlaneRendererTexture() {
@@ -809,7 +828,7 @@ private void onMenuItemClicked(View view) {
            });
 }</code></pre>
 <p>As you can see, it needs a fully set up ArSceneView to work, and as we only need to do this once, we can safely call this method after we&#39;ve set up our ArSceneView&#39;s Session.</p>
-<h2><strong>Collisions</strong></h2>
+<h2 is-upgraded><strong>Collisions</strong></h2>
 <p>Creating complex interactions or AR games will always require knowing when two objects are touching. If it&#39;s a canon&#39;s projectile, a bullet, or any other model we want, Sceneform adds a mechanism which notifies us when two Nodes have collided. Each Node or Renderable can be set a CollisionShape, that&#39;s either a Box or Sphere.</p>
 <p>The API provides two types of collision testing:</p>
 <ul>
@@ -817,65 +836,60 @@ private void onMenuItemClicked(View view) {
 <li>Testing for overlapping collision shapes, that&#39;s useful when our two objects won&#39;t have a straight trajectory towards one another.</li>
 </ul>
 <p>For our exercise, we&#39;ll make the hay or distillery disappear when Andy touches them. All we need to do is test for overlapping after our move animation finishes. If the Scene detects Andy&#39;s collision shape has touched another one, it provides us with the collided Node:</p>
-<pre><code>private void animateNodeMovement(Node start, Node destination) {
-   ObjectAnimator movementAnimator = new ObjectAnimator();
-   Vector3 startPosition = start.getLocalPosition();
-   Vector3 endPosition = Vector3.subtract(destination.getWorldPosition(), start.getWorldPosition());
-   movementAnimator.setObjectValues(startPosition, endPosition);
-   movementAnimator.setPropertyName(&#34;localPosition&#34;);
-   movementAnimator.setEvaluator(new Vector3Evaluator());
-   movementAnimator.setInterpolator(new LinearInterpolator());
-   movementAnimator.setDuration(2000);
-   movementAnimator.setTarget(start);
-   movementAnimator.start();
-
-   new Handler().postDelayed(() -&gt; {
-       Node collidedNode = arSceneView.getScene().overlapTest(start);
-       if (collidedNode != null) {
-           collidedNode.setEnabled(false);
-       }
-   }, 2000);
+<pre><code>private void checkHit(Node projectile) {
+   Node collidedNode = arSceneView.getScene().overlapTest(projectile);
+   if (collidedNode != null) {
+       // Do something with the collided node
+   }
 }</code></pre>
-<h2><strong>Custom Nodes</strong></h2>
+<h2 is-upgraded><strong>Custom Nodes</strong></h2>
 <p>Sometimes, using the basic Node structure is not enough. Extending the Node class provides some extra useful functionality:</p>
 <ul>
 <li>onActivate, called when a node becomes active. A Node is active if it&#39;s enabled, part of a scene, and its parent is active.</li>
 <li>onDeactivate, called when a node becomes inactive. A Node is inactive if it&#39;s disabled, not part of a scene, or its parent is inactive.</li>
 <li>onUpdate, called each frame the Node is rendered (only if active). Very useful if we need to check collisions or alter the Node any way based on frame time.</li>
 </ul>
+<h2 is-upgraded><strong>TransformableNode</strong></h2>
+<p>There are some occasions where we would need to allow the user to interact with our virtual object. Since it&#39;s usually very hard to convert a 2D screen movement to a 3D transformation, Sceneform does this already for us. When displaying an object, we only need to inherit or create a <em>TransformableNode</em> instead of the standard <em>Node.</em></p>
+<p>Remember to leverage the Node tree hierarchy. Only the base Node needs to be a TransformableNode, and all its children will responds to its changes.</p>
+<pre><code>private void renderCannon(Anchor anchor) {
+   if (cannonAnchor != null) {
+       cannonAnchor.detach();
+   }
+   cannonAnchor = anchor;
+
+   baseNode = new TransformableNode();
+   baseNode.setRenderable(baseRenderable);
+
+   forkNode = new Node();
+   forkNode.setRenderable(forkRenderable);
+   baseNode.addChild(forkNode);
+
+   barrelBaseNode = new Node();
+   barrelBaseNode.setRenderable(barrelBaseRenderable);
+   forkNode.addChild(barrelBaseNode);
+
+   barrelTopNode = new Node();
+   barrelTopNode.setRenderable(barrelTopRenderable);
+   barrelBaseNode.addChild(barrelTopNode);
+
+   AnchorNode anchorNode = new AnchorNode(anchor);
+   anchorNode.setParent(arSceneView.getScene());
+   anchorNode.addChild(baseNode);
+
+   baseNode.setOnTapListener((hitTestResult, motionEvent) -&gt; displayMenu());
+   forkNode.setOnTapListener((hitTestResult, motionEvent) -&gt; displayMenu());
+}</code></pre>
 
 
       </google-codelab-step>
     
   </google-codelab>
 
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-49880327-14', 'auto');
-
-    (function() {
-      var gaCodelab = '';
-      if (gaCodelab) {
-        ga('create', gaCodelab, 'auto', {name: 'codelab'});
-      }
-
-      var gaView;
-      var parts = location.search.substring(1).split('&');
-      for (var i = 0; i < parts.length; i++) {
-        var param = parts[i].split('=');
-        if (param[0] === 'viewga') {
-          gaView = param[1];
-          break;
-        }
-      }
-      if (gaView && gaView !== gaCodelab) {
-        ga('create', gaView, 'auto', {name: 'view'});
-      }
-    })();
-  </script>
+  <script src="https://storage.googleapis.com/codelab-elements/native-shim.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/custom-elements.min.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/prettify.js"></script>
+  <script src="https://storage.googleapis.com/codelab-elements/codelab-elements.js"></script>
 
 </body>
 </html>

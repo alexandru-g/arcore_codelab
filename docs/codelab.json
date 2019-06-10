@@ -1,15 +1,15 @@
 {
   "environment": "web",
-  "source": "18T3gI_k8VyFQDg64n751Uuojn7BB3CeMs2H_3cdxIfk",
   "format": "html",
-  "prefix": "../../arcore_codelab/",
+  "prefix": "https://storage.googleapis.com",
   "mainga": "UA-49880327-14",
-  "updated": "2018-09-21T13:22:39Z",
+  "updated": "2019-06-10T14:20:43Z",
   "id": "docs",
   "duration": 0,
   "title": "Augmented Reality on Android",
-  "author": "Alexandru Gherghina",
+  "authors": "Alexandru Gherghina",
   "summary": "In this codelab, you'll build your first Augmented Reality app, which uses ARCore and the SceneForm API to quickly render objects and interact with them",
+  "source": "18T3gI_k8VyFQDg64n751Uuojn7BB3CeMs2H_3cdxIfk",
   "theme": "android",
   "status": [
     "draft"
