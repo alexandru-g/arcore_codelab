@@ -1,0 +1,197 @@
+{
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5123,
+            "count" : 4476,
+            "max" : [
+                1551
+            ],
+            "min" : [
+                0
+            ],
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 1552,
+            "max" : [
+                0.40391430258750916,
+                0.4069231152534485,
+                2.597144603729248
+            ],
+            "min" : [
+                -0.40391433238983154,
+                -0.4009055495262146,
+                0.44631004333496094
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 1552,
+            "max" : [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min" : [
+                -1.0,
+                -1.0,
+                -1.0
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5126,
+            "count" : 1552,
+            "max" : [
+                0.999996542930603,
+                0.9999966025352478,
+                1.0,
+                1.0
+            ],
+            "min" : [
+                -0.9999966025352478,
+                -0.999996542930603,
+                -0.38660892844200134,
+                -1.0
+            ],
+            "type" : "VEC4"
+        },
+        {
+            "bufferView" : 4,
+            "componentType" : 5126,
+            "count" : 1552,
+            "max" : [
+                0.8976134657859802,
+                0.5719126164913177
+            ],
+            "min" : [
+                0.46837329864501953,
+                0.0066536664962768555
+            ],
+            "type" : "VEC2"
+        }
+    ],
+    "asset" : {
+        "generator" : "Khronos Blender glTF 2.0 exporter",
+        "version" : "2.0"
+    },
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 8952,
+            "byteOffset" : 0,
+            "target" : 34963
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 18624,
+            "byteOffset" : 8952,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 18624,
+            "byteOffset" : 27576,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 24832,
+            "byteOffset" : 46200,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 12416,
+            "byteOffset" : 71032,
+            "target" : 34962
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 83448,
+            "uri" : "cannon_barrel_top.bin"
+        }
+    ],
+    "images" : [
+        {
+            "name" : "defaultCannon_color",
+            "uri" : "defaultCannon_color.png"
+        }
+    ],
+    "materials" : [
+        {
+            "name" : "cannon_mat.001",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.800000011920929,
+                    0.800000011920929,
+                    0.800000011920929,
+                    1.0
+                ],
+                "baseColorTexture" : {
+                    "index" : 0
+                },
+                "metallicFactor" : 0.0
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Cylinder.004",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "NORMAL" : 2,
+                        "POSITION" : 1,
+                        "TANGENT" : 3,
+                        "TEXCOORD_0" : 4
+                    },
+                    "indices" : 0,
+                    "material" : 0
+                }
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "barrel_top_geo",
+            "rotation" : [
+                -8.146033536604591e-08,
+                -1.51731724994072e-16,
+                1.862645371275562e-09,
+                1.0
+            ],
+            "translation" : [
+                0.0,
+                0.9958333969116211,
+                -0.5037466287612915
+            ]
+        }
+    ],
+    "samplers" : [
+        {}
+    ],
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "textures" : [
+        {
+            "sampler" : 0,
+            "source" : 0
+        }
+    ]
+}

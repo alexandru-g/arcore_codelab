@@ -1,0 +1,172 @@
+{
+    "accessors" : [
+        {
+            "bufferView" : 0,
+            "componentType" : 5123,
+            "count" : 5118,
+            "max" : [
+                1881
+            ],
+            "min" : [
+                0
+            ],
+            "type" : "SCALAR"
+        },
+        {
+            "bufferView" : 1,
+            "componentType" : 5126,
+            "count" : 1882,
+            "max" : [
+                0.41904330253601074,
+                0.42197972536087036,
+                0.9022161960601807
+            ],
+            "min" : [
+                -0.41904330253601074,
+                -0.4159621596336365,
+                -0.5963340997695923
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 2,
+            "componentType" : 5126,
+            "count" : 1882,
+            "max" : [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "min" : [
+                -1.0,
+                -1.0,
+                -1.0
+            ],
+            "type" : "VEC3"
+        },
+        {
+            "bufferView" : 3,
+            "componentType" : 5126,
+            "count" : 1882,
+            "max" : [
+                0.6375659108161926,
+                0.630593478679657
+            ],
+            "min" : [
+                0.00403348496183753,
+                0.3182084560394287
+            ],
+            "type" : "VEC2"
+        }
+    ],
+    "asset" : {
+        "generator" : "Khronos Blender glTF 2.0 exporter",
+        "version" : "2.0"
+    },
+    "bufferViews" : [
+        {
+            "buffer" : 0,
+            "byteLength" : 10236,
+            "byteOffset" : 0,
+            "target" : 34963
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 22584,
+            "byteOffset" : 10236,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 22584,
+            "byteOffset" : 32820,
+            "target" : 34962
+        },
+        {
+            "buffer" : 0,
+            "byteLength" : 15056,
+            "byteOffset" : 55404,
+            "target" : 34962
+        }
+    ],
+    "buffers" : [
+        {
+            "byteLength" : 70460,
+            "uri" : "cannon_barrel_base.bin"
+        }
+    ],
+    "images" : [
+        {
+            "name" : "defaultCannon_color",
+            "uri" : "defaultCannon_color.png"
+        }
+    ],
+    "materials" : [
+        {
+            "name" : "cannon_mat.001",
+            "pbrMetallicRoughness" : {
+                "baseColorFactor" : [
+                    0.800000011920929,
+                    0.800000011920929,
+                    0.800000011920929,
+                    1.0
+                ],
+                "baseColorTexture" : {
+                    "index" : 0
+                },
+                "metallicFactor" : 0.0
+            }
+        }
+    ],
+    "meshes" : [
+        {
+            "name" : "Cylinder.000",
+            "primitives" : [
+                {
+                    "attributes" : {
+                        "NORMAL" : 2,
+                        "POSITION" : 1,
+                        "TEXCOORD_0" : 3
+                    },
+                    "indices" : 0,
+                    "material" : 0
+                }
+            ]
+        }
+    ],
+    "nodes" : [
+        {
+            "mesh" : 0,
+            "name" : "barrel_base_geo",
+            "rotation" : [
+                -8.146033536604591e-08,
+                -1.51731724994072e-16,
+                1.862645371275562e-09,
+                1.0
+            ],
+            "translation" : [
+                0.0,
+                0.9958333969116211,
+                -0.5037466287612915
+            ]
+        }
+    ],
+    "samplers" : [
+        {}
+    ],
+    "scene" : 0,
+    "scenes" : [
+        {
+            "name" : "Scene",
+            "nodes" : [
+                0
+            ]
+        }
+    ],
+    "textures" : [
+        {
+            "sampler" : 0,
+            "source" : 0
+        }
+    ]
+}

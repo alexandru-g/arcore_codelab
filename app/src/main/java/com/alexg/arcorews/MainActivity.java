@@ -1,16 +1,20 @@
 package com.alexg.arcorews;
 
 import android.Manifest;
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.ar.core.Anchor;
@@ -24,28 +28,24 @@ import com.google.ar.core.TrackingState;
 import com.google.ar.core.exceptions.CameraNotAvailableException;
 import com.google.ar.core.exceptions.UnavailableApkTooOldException;
 import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException;
+import com.google.ar.core.exceptions.UnavailableDeviceNotCompatibleException;
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.ArSceneView;
 import com.google.ar.sceneform.HitTestResult;
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.math.Vector3Evaluator;
 import com.google.ar.sceneform.rendering.Color;
 import com.google.ar.sceneform.rendering.Light;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.rendering.PlaneRenderer;
-import com.google.ar.sceneform.rendering.Renderable;
 import com.google.ar.sceneform.rendering.Texture;
 import com.google.ar.sceneform.rendering.ViewRenderable;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -55,16 +55,25 @@ public class MainActivity extends AppCompatActivity {
     private boolean hasFinishedLoading;
     private Snackbar loadingSnackbar;
 
-    private ModelRenderable andyRenderable;
-    private ModelRenderable distilleryRenderable;
-    private ModelRenderable hayRenderable;
+    private ModelRenderable baseRenderable;
+    private ModelRenderable forkRenderable;
+    private ModelRenderable barrelBaseRenderable;
+    private ModelRenderable barrelTopRenderable;
     private ViewRenderable menuRenderable;
 
-    private Anchor menuAnchor;
-    private AnchorNode menuAnchorNode;
+    private Node baseNode;
+    private Node forkNode;
+    private Node barrelBaseNode;
+    private Node barrelTopNode;
 
-    private Map<Renderable, AnchorNode> displayedObjects = new HashMap<>();
-    private Node animatedNode;
+    private float angle = 0.0f;
+    private float qty = 0.1f;
+    private boolean isRotatingHorizontally = false;
+    private boolean isRotatingVertically = false;
+    private Anchor cannonAnchor;
+    private Node menuNode;
+
+    private Node lightNode = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,10 +93,6 @@ public class MainActivity extends AppCompatActivity {
             .getScene()
             .addOnUpdateListener(
                 frameTime -> {
-                    // We've not displayed the loading Snackbar, no point in doing anything
-                    if (loadingSnackbar == null) {
-                        return;
-                    }
                     // Check if a camera frame exists
                     Frame frame = arSceneView.getArFrame();
                     if (frame == null) {
@@ -101,8 +106,15 @@ public class MainActivity extends AppCompatActivity {
                     for (Plane plane : frame.getUpdatedTrackables(Plane.class)) {
                         if (plane.getTrackingState() == TrackingState.TRACKING) {
                             hideLoadingMessage();
-                            return;
+                            break;
                         }
+                    }
+                    // If we're rotating our cannon, do that here
+                    if (isRotatingHorizontally) {
+                        rotateHorizontally();
+                    }
+                    if (isRotatingVertically) {
+                        rotateVertically();
                     }
                 });
 
@@ -146,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
         installAlreadyRequested = true;
 
         if (arSceneView.getSession() == null) {
-            Session session = null;
+            Session session;
             try {
                 session = new Session(this);
                 // IMPORTANT!!!  ArSceneView requires the `LATEST_CAMERA_IMAGE` non-blocking update mode.
@@ -163,11 +175,8 @@ public class MainActivity extends AppCompatActivity {
 
                 // Set the plane renderer texture to our custom image
                 setPlaneRendererTexture();
-            } catch (UnavailableArcoreNotInstalledException e) {
-                e.printStackTrace();
-            } catch (UnavailableApkTooOldException e) {
-                e.printStackTrace();
-            } catch (UnavailableSdkTooOldException e) {
+            } catch (UnavailableArcoreNotInstalledException | UnavailableApkTooOldException
+                    | UnavailableSdkTooOldException | UnavailableDeviceNotCompatibleException e) {
                 e.printStackTrace();
             }
         }
@@ -216,30 +225,35 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadModels() {
         // Load our 3 models and the menu layout as a 3D object
-        CompletableFuture<ModelRenderable> andyStage =
-                ModelRenderable.builder().setSource(this, Uri.parse("andy.sfb")).build();
-        CompletableFuture<ModelRenderable> distilleryStage =
-                ModelRenderable.builder().setSource(this, Uri.parse("distillery.sfb")).build();
-        CompletableFuture<ModelRenderable> hayStage =
-                ModelRenderable.builder().setSource(this, Uri.parse("hay.sfb")).build();
+        CompletableFuture<ModelRenderable> baseStage =
+                ModelRenderable.builder().setSource(this, Uri.parse("cannon_base.sfb")).build();
+        CompletableFuture<ModelRenderable> forkStage =
+                ModelRenderable.builder().setSource(this, Uri.parse("cannon_fork.sfb")).build();
+        CompletableFuture<ModelRenderable> barrelBaseStage =
+                ModelRenderable.builder().setSource(this, Uri.parse("cannon_barrel_base.sfb")).build();
+        CompletableFuture<ModelRenderable> barrelTopStage =
+                ModelRenderable.builder().setSource(this, Uri.parse("cannon_barrel_top.sfb")).build();
         CompletableFuture<ViewRenderable> menuStage =
                 ViewRenderable.builder().setView(this, R.layout.view_menu).build();
 
         CompletableFuture.allOf(
-                andyStage,
-                distilleryStage,
-                hayStage,
+                baseStage,
+                forkStage,
+                barrelBaseStage,
+                barrelTopStage,
                 menuStage
         ).handle((notUsed, throwable) -> {
             try {
-                andyRenderable = andyStage.get();
-                distilleryRenderable = distilleryStage.get();
-                hayRenderable = hayStage.get();
+                baseRenderable = baseStage.get();
+                forkRenderable = forkStage.get();
+                barrelBaseRenderable = barrelBaseStage.get();
+                barrelTopRenderable = barrelTopStage.get();
 
                 menuRenderable = menuStage.get();
-                menuRenderable.getView().findViewById(R.id.item_andy).setOnClickListener(this::onMenuItemClicked);
-                menuRenderable.getView().findViewById(R.id.item_distillery).setOnClickListener(this::onMenuItemClicked);
-                menuRenderable.getView().findViewById(R.id.item_hay).setOnClickListener(this::onMenuItemClicked);
+                menuRenderable.getView().findViewById(R.id.item_rotate_hor).setOnClickListener(this::onMenuItemClicked);
+                menuRenderable.getView().findViewById(R.id.item_rotate_vert).setOnClickListener(this::onMenuItemClicked);
+                menuRenderable.getView().findViewById(R.id.item_fire).setOnClickListener(this::onMenuItemClicked);
+                menuRenderable.getView().findViewById(R.id.item_light).setOnClickListener(this::onMenuItemClicked);
 
                 hasFinishedLoading = true;
             } catch (InterruptedException | ExecutionException e) {
@@ -282,123 +296,144 @@ public class MainActivity extends AppCompatActivity {
                 Trackable trackable = hit.getTrackable();
                 if (trackable instanceof Plane
                         && ((Plane) trackable).isPoseInPolygon(hit.getHitPose())) {
-                    // We have a plane hit, display our menu at the location
-                    displayMenu(hit.createAnchor());
+                    // We have a plane hit, display our object at the location
+                    renderCannon(hit.createAnchor());
                 }
             }
         }
     }
 
-    private void displayMenu(Anchor anchor) {
-        // Make sure we don't have more than one Menu displayed at a time
-        if (menuAnchor != null) {
-            menuAnchor.detach();
+    private void displayMenu() {
+        // Create a Node for the menu if we haven't created it before (if we've displayed it before)
+        if (menuNode != null) {
+            baseNode.removeChild(menuNode);
         }
-        // Mark that we've displayed the menu
-        menuAnchor = anchor;
+        // Add the menu node
+        menuNode = new Node();
+        menuNode.setRenderable(menuRenderable);
+        // Move it a bit upwards so it's visible above the cannon
+        menuNode.setLocalPosition(new Vector3(0.0f, 0.3f, 0.0f));
 
-        // Create an AnchorNode for the menu if we haven't created it before (if we've displayed it before)
-        if (menuAnchorNode == null) {
-            // Actually render the menu
-            Node node = new Node();
-            node.setRenderable(menuRenderable);
-
-            // And save the AnchorNode so we can hide the menu when rendering one of the models in its place
-            menuAnchorNode = new AnchorNode();
-            menuAnchorNode.setParent(arSceneView.getScene());
-            menuAnchorNode.addChild(node);
-
-        }
-        menuAnchorNode.setAnchor(anchor);
-        menuAnchorNode.setEnabled(true);
+        baseNode.addChild(menuNode);
     }
 
-    private Node renderNodeForAnchor(Renderable renderable, Anchor anchor) {
-        // Create a Node, AnchorNode and attach them to the Scene to begin rendering the object
-        Node node = new Node();
-        node.setRenderable(renderable);
+    private void renderCannon(Anchor anchor) {
+        if (cannonAnchor != null) {
+            cannonAnchor.detach();
+        }
+        cannonAnchor = anchor;
+
+        baseNode = new Node();
+        baseNode.setRenderable(baseRenderable);
+
+        forkNode = new Node();
+        forkNode.setRenderable(forkRenderable);
+        baseNode.addChild(forkNode);
+
+        barrelBaseNode = new Node();
+        barrelBaseNode.setRenderable(barrelBaseRenderable);
+        forkNode.addChild(barrelBaseNode);
+
+        barrelTopNode = new Node();
+        barrelTopNode.setRenderable(barrelTopRenderable);
+        barrelBaseNode.addChild(barrelTopNode);
 
         AnchorNode anchorNode = new AnchorNode(anchor);
         anchorNode.setParent(arSceneView.getScene());
-        anchorNode.addChild(node);
+        anchorNode.addChild(baseNode);
 
-        displayedObjects.put(renderable, anchorNode);
+        baseNode.setOnTapListener((hitTestResult, motionEvent) -> displayMenu());
+        forkNode.setOnTapListener((hitTestResult, motionEvent) -> displayMenu());
+    }
 
-        return node;
+    private void rotateHorizontally() {
+        forkNode.setLocalRotation(Quaternion.axisAngle(new Vector3(0.0f, 1.0f, 0.0f), angle));
+        angle += qty;
+        if (angle >= 30f) {
+            qty = -0.2f;
+        } else if (angle <= 0) {
+            qty = 0.2f;
+        }
+    }
+
+    private void rotateVertically() {
+        forkNode.setLocalRotation(Quaternion.axisAngle(new Vector3(1.0f, 0.0f, 0.0f), -angle));
+        angle += qty;
+        if (angle >= 30f) {
+            qty = -0.2f;
+        } else if (angle <= 0) {
+            qty = 0.2f;
+        }
+    }
+
+    private void fire() {
+        Vector3 startPos = barrelTopNode.getLocalPosition();
+        Vector3 endPos = new Vector3(startPos.x, startPos.y, startPos.z - 0.1f);
+        ObjectAnimator animator = ObjectAnimator.ofObject(barrelTopNode, "localPosition", new Vector3Evaluator(), endPos);
+        animator.setInterpolator(new OvershootInterpolator());
+        animator.setDuration(200);
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {}
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                recoilBack(startPos);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {}
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {}
+        });
+        animator.start();
+    }
+
+    private void recoilBack(Vector3 endPos) {
+        ObjectAnimator animator = ObjectAnimator.ofObject(barrelTopNode, "localPosition", new Vector3Evaluator(), endPos);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.setDuration(1000);
+        animator.start();
     }
 
     private void onMenuItemClicked(View view) {
         // A menu item is clicked, check if the item is not being rendered (maximum one)
         // Then render it and setup the tap listeners so Andy's movement animation works
-        if (menuAnchor != null) {
-            switch (view.getId()) {
-                case R.id.item_distillery:
-                    if (displayedObjects.containsKey(distilleryRenderable)) {
-                        displayedObjects.get(distilleryRenderable).getAnchor().detach();
-                    }
-                    Node distilleryNode = renderNodeForAnchor(distilleryRenderable, menuAnchor);
-                    distilleryNode.setOnTapListener((hitTestResult, motionEvent) -> {
-                        animateNodeMovement(animatedNode, distilleryNode);
-                    });
-                    break;
-                case R.id.item_hay:
-                    if (displayedObjects.containsKey(hayRenderable)) {
-                        displayedObjects.get(hayRenderable).getAnchor().detach();
-                    }
-                    Node hayNode = renderNodeForAnchor(hayRenderable, menuAnchor);
-                    hayNode.setOnTapListener((hitTestResult, motionEvent) -> {
-                        animateNodeMovement(animatedNode, hayNode);
-                    });
-                    break;
-                default:
-                    if (displayedObjects.containsKey(andyRenderable)) {
-                        displayedObjects.get(andyRenderable).getAnchor().detach();
-                    }
-                    Node andyNode = renderNodeForAnchor(andyRenderable, menuAnchor);
-                    andyNode.setOnTapListener((hitTestResult, motionEvent) -> {
-                        animatedNode = andyNode;
-                    });
-                    // Set up a light over Andy so he's the real star
-                    lightUpAndy(andyNode);
-                    break;
-            }
-            // We don't have a menu displayed anymore
-            menuAnchor = null;
-            menuAnchorNode.setEnabled(false);
+        switch (view.getId()) {
+            case R.id.item_rotate_hor:
+                isRotatingHorizontally = !isRotatingHorizontally;
+                break;
+            case R.id.item_rotate_vert:
+                isRotatingVertically = !isRotatingVertically;
+                break;
+            case R.id.item_light:
+                lightUpNode(forkNode);
+                break;
+            case R.id.item_fire:
+            default:
+                fire();
+                break;
         }
+        // We don't have a menu displayed anymore
+        baseNode.removeChild(menuNode);
+        menuNode = null;
     }
 
-    private void animateNodeMovement(Node start, Node destination) {
-        // Setup a standard ObjectAnimator that moves Andy to the destination Node by interpolating the two positions
-        ObjectAnimator movementAnimator = new ObjectAnimator();
-        Vector3 startPosition = start.getLocalPosition();
-        Vector3 endPosition = Vector3.subtract(destination.getWorldPosition(), start.getWorldPosition());
-        movementAnimator.setObjectValues(startPosition, endPosition);
-        movementAnimator.setPropertyName("localPosition");
-        movementAnimator.setEvaluator(new Vector3Evaluator());
-        movementAnimator.setInterpolator(new LinearInterpolator());
-        movementAnimator.setDuration(2000);
-        movementAnimator.setTarget(start);
-        movementAnimator.start();
-
-        // After the animation finishes, check if Andy has collided with the destination Node (should)
-        // and make it disappear
-        new Handler().postDelayed(() -> {
-            Node collidedNode = arSceneView.getScene().overlapTest(start);
-            if (collidedNode != null) {
-                if (displayedObjects.containsKey(collidedNode.getRenderable())) {
-                    displayedObjects.get(collidedNode.getRenderable()).getAnchor().detach();
-                }
-            }
-        }, 2000);
-    }
-
-    private void lightUpAndy(Node andyNode) {
-        Light yellowSpotlight = Light.builder(Light.Type.SPOTLIGHT)
-                .setColor(new Color(android.graphics.Color.YELLOW))
-                .setShadowCastingEnabled(true)
-                .build();
-        andyNode.setLight(yellowSpotlight);
+    private void lightUpNode(Node node) {
+        if (lightNode == null) {
+            Light yellowSpotlight = Light.builder(Light.Type.POINT)
+                    .setColor(new Color(android.graphics.Color.WHITE))
+                    .setShadowCastingEnabled(true)
+                    .build();
+            lightNode = new Node();
+            lightNode.setLight(yellowSpotlight);
+            lightNode.setLocalPosition(new Vector3(0.0f, 0.5f, 0.0f));
+            node.addChild(lightNode);
+        } else {
+            node.removeChild(lightNode);
+            lightNode = null;
+        }
     }
 
     private void setPlaneRendererTexture() {

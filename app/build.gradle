@@ -26,28 +26,33 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+    implementation 'androidx.appcompat:appcompat:1.1.0-beta01'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     // Alternatively, use ArSceneView without the UX dependency.
-    implementation 'com.google.ar.sceneform:core:1.4.0'
-    implementation 'com.android.support:design:28.2.1'
+    implementation 'com.google.ar.sceneform:core:1.9.0'
+    implementation 'com.android.support:design:28.0.0'
 }
 
 
-sceneform.asset('sampledata/andy/andy.gltf',
+sceneform.asset('sampledata/cannon/cannon_barrel_base.gltf',
         'default',
-        'sampledata/andy/andy.sfa',
-        'src/main/assets/andy')
+        'sampledata/cannon/cannon_barrel_base.sfa',
+        'src/main/assets/cannon_barrel_base')
 
-sceneform.asset('sampledata/distillery/distillery.gltf',
+sceneform.asset('sampledata/cannon/cannon_barrel_top.gltf',
         'default',
-        'sampledata/distillery/distillery.sfa',
-        'src/main/assets/distillery')
+        'sampledata/cannon/cannon_barrel_top.sfa',
+        'src/main/assets/cannon_barrel_top')
 
-sceneform.asset('sampledata/hay/hay.gltf',
+sceneform.asset('sampledata/cannon/cannon_base.gltf',
         'default',
-        'sampledata/hay/hay.sfa',
-        'src/main/assets/hay')
+        'sampledata/cannon/cannon_base.sfa',
+        'src/main/assets/cannon_base')
+
+sceneform.asset('sampledata/cannon/cannon_fork.gltf',
+        'default',
+        'sampledata/cannon/cannon_fork.sfa',
+        'src/main/assets/cannon_fork')

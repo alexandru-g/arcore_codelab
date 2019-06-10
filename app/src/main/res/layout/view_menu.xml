@@ -7,24 +7,30 @@
     android:background="#444444FF">
 
     <TextView
-        android:id="@+id/item_andy"
+        android:id="@+id/item_rotate_hor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Andy"
+        android:text="Rotate horizontally"
         android:textColor="@android:color/white"/>
 
     <TextView
-        android:id="@+id/item_distillery"
+        android:id="@+id/item_rotate_vert"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Distillery"
+        android:text="Rotate vertically"
         android:textColor="@android:color/white"/>
 
     <TextView
-        android:id="@+id/item_hay"
+        android:id="@+id/item_fire"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hay"
+        android:text="FIRE"
         android:textColor="@android:color/white"/>
 
+    <TextView
+        android:id="@+id/item_light"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Light"
+        android:textColor="@android:color/white"/>
 </LinearLayout>
